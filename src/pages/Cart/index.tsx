@@ -38,24 +38,31 @@ interface Product {
 const Cart: React.FC = () => {
   const { increment, decrement, products } = useCart();
 
-  function handleIncrement(id: string): void {
+  async function handleIncrement(id: string): Promise<void> {
     // TODO
+    increment(id);
   }
 
-  function handleDecrement(id: string): void {
+  async function handleDecrement(id: string): Promise<void> {
     // TODO
+    decrement(id);
   }
 
   const cartTotal = useMemo(() => {
-    // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
-
-    return formatValue(0);
+    const totalValue = products.reduce(
+      (acc, product) => product.price * product.quantity + acc,
+      0,
+    );
+    return formatValue(totalValue);
   }, [products]);
 
   const totalItensInCart = useMemo(() => {
     // TODO RETURN THE SUM OF THE QUANTITY OF THE PRODUCTS IN THE CART
-
-    return 0;
+    const totalValue = products.reduce(
+      (acc, product) => product.quantity + acc,
+      0,
+    );
+    return totalValue;
   }, [products]);
 
   return (
